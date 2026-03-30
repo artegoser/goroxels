@@ -1,6 +1,11 @@
 import EventManager from './EventManager';
 
+const _urlParams = new URLSearchParams(location.search);
+const _server = _urlParams.get('server') || (typeof REMOTE_SERVER !== 'undefined' && REMOTE_SERVER) || null;
+
 export default {
+    serverHost: _server,
+
     socket: null,
     chunkManager: null,
     renderer: null,

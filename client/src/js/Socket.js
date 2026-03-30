@@ -24,9 +24,12 @@ export default class Socket extends EventEmitter {
     constructor(port) {
         super();
 
-        const scheme = location.protocol.startsWith('https') ? 'wss' : 'ws';
-        const host = location.hostname || 'localhost';
-        this.url = `${scheme}://${host}:${port}`;
+        const host = globals.serverHost || location.hostname || 'localhost';
+        const scheme = globals.serverHost ? 'wss' : (location.protocol.startsWith('https') ? 'wss' : 'ws');
+        this.url = globals.serverHost
+            ? `${scheme}://${host}`
+            : `${scheme}://${host}:${port}`;
+        console.log(`[Socket] connecting to ${this.url}`);
 
         this.pendingPixels = {};
 

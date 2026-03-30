@@ -178,7 +178,8 @@ module.exports = async env => {
     await fs.remove(config.output.path);
 
     config.plugins.push(new webpack.DefinePlugin({
-        'PRODUCTION_BUILD': JSON.stringify(!!env.release)
+        'PRODUCTION_BUILD': JSON.stringify(!!env.release),
+        'REMOTE_SERVER': JSON.stringify(process.env.REMOTE_SERVER || '')
     }));
 
     return config;

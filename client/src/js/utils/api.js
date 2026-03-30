@@ -24,7 +24,9 @@ export async function apiRequest(path, config = {}) {
         config.headers['Content-Type'] = 'application/json';
         config.body = JSON.stringify(config.body);
     }
-    const response = await fetch('/api' + path, config);
+    const globals = require('../globals').default;
+    const base = globals.serverHost ? `https://${globals.serverHost}` : '';
+    const response = await fetch(base + '/api' + path, config);
 
     if (response.headers.get('Content-Type') && response.headers.get('Content-Type').includes('application/json')) {
         try {

@@ -45,17 +45,25 @@ module.exports = (passport) => {
         };
     }
     
+    const config = require('../../../config');
+
     // Google
-    router.get('/google', passport.authenticate('google', { scope: ['email'] }));
-    router.get('/googleCallback', makeAuthHandler('google'));
+    if (config.auth.google.use) {
+        router.get('/google', passport.authenticate('google', { scope: ['email'] }));
+        router.get('/googleCallback', makeAuthHandler('google'));
+    }
 
     // Discord
-    router.get('/discord', passport.authenticate('discord', { scope: ['identify', 'email'] }));
-    router.get('/discordCallback', makeAuthHandler('discord'));
+    if (config.auth.discord.use) {
+        router.get('/discord', passport.authenticate('discord', { scope: ['identify', 'email'] }));
+        router.get('/discordCallback', makeAuthHandler('discord'));
+    }
 
     // VK
-    router.get('/vk', passport.authenticate('vkontakte', { scope: ['email'] }));
-    router.get('/vk/return', makeAuthHandler('vkontakte'));
+    if (config.auth.vkontakte.use) {
+        router.get('/vk', passport.authenticate('vkontakte', { scope: ['email'] }));
+        router.get('/vk/return', makeAuthHandler('vkontakte'));
+    }
 
     // Failure
     router.get('/failure', (req, res) => {

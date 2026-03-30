@@ -17,8 +17,9 @@ if [ ! -d "$SERVER_DIR/node_modules" ]; then
 fi
 
 # Build client
+# Pass REMOTE_SERVER env to webpack, e.g.: REMOTE_SERVER=goroxels.ru ./start.sh
 echo "Building client..."
-npm run build --prefix "$CLIENT_DIR"
+REMOTE_SERVER="${REMOTE_SERVER:-}" npm run build --prefix "$CLIENT_DIR"
 
 # Copy client dist to server public
 echo "Copying client build to server/public..."
